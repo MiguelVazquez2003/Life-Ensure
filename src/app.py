@@ -1,21 +1,7 @@
-import csv
-from collections import Counter
 from flask import Flask, request
+from collections import Counter
 
 from src.api.v1.list_api import app
-
-# csv_path = r'C:\Users\angel\OneDrive\Escritorio\LifeEnsure\src\incidentesviales_noviembre22.csv'
-
-# colonias = []
-
-# with open(csv_path) as f:
-#     reader = csv.reader(f)
-#     next(reader)  # Saltar la primera fila de encabezados
-#     for row in reader:
-#         colonias.append(row[9])
-
-# frecuencia_colonias = Counter(colonias)
-# colonia_mas_comun = frecuencia_colonias.most_common(1)[0][0]
 
 # @app.route('/get_colonia/<colonia>', methods=['GET'])
 # def get_colonia_accidentes(colonia):
