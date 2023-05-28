@@ -22,19 +22,40 @@ public class LoginClientController : ControllerBase
         this.config = config;
     }
 
-    [HttpPost("authenticate")]
-    public async Task<ActionResult> Login(UsuarioDto clientDto)
-    {
-        var client = await loginService.GetClient(clientDto);
-        if (client is null)
+    
+        [HttpPost("authenticate")]
+        public async Task<ActionResult> Login(UsuarioDto usuarioDto)
         {
-            return BadRequest(new { message = $"Credenciales invalidas" });
+            var usuario = await loginService.GetClient(usuarioDto);
+            if (usuario is null)
+            {
+                return BadRequest(new { message = $"Credenciales invalidas" });
+            }
+            string jwtToken = GenerateToken(usuario);
+
+            return Ok(new { token = jwtToken });
         }
-       
+        private string GenerateToken(Usuario usuario)
+        {
+            var claims = new[]{
+            new Claim(ClaimTypes.Name,usuario.Nombre),
+            new Claim(ClaimTypes.Email,usuario.Email),
+            new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString())
+        };
 
-        return Ok(new {message=$"Ingreso con exito"});
-    }
 
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:ClientKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var securityToken = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.Now.AddMinutes(120),
+                    signingCredentials: creds);
+
+            string token = new JwtSecurityTokenHandler().WriteToken(securityToken);
+            return token;
+        }
     
 
     

@@ -75,3 +75,4 @@ C:\Users\angel\OneDrive\Escritorio\Intento\LifeEnsure\obj\Debug\net7.0\LifeEnsur
 C:\Users\angel\OneDrive\Escritorio\Intento\LifeEnsure\obj\Debug\net7.0\LifeEnsure.genruntimeconfig.cache
 C:\Users\angel\OneDrive\Escritorio\Intento\LifeEnsure\obj\Debug\net7.0\ref\LifeEnsure.dll
 C:\Users\angel\OneDrive\Escritorio\Intento\LifeEnsure\bin\Debug\net7.0\CsvHelper.dll
+C:\Users\angel\OneDrive\Escritorio\Intento\LifeEnsure\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

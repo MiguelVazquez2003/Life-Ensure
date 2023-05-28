@@ -1,5 +1,16 @@
 using LifeEnsure.Data;
 using LifeEnsure.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
+using LifeEnsure.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+
+
+using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,6 +27,29 @@ builder.Services.AddScoped<AccidenteService>();
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<CsvService>();
 
+// Configuraci�n para token de usuario
+builder.Services.AddAuthentication("UsuarioToken")
+    .AddJwtBearer("UsuarioToken", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:ClientKey"])),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
+
+// Pol�tica de autorizaci�n para usuarios
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UsuarioPolicy", policy =>
+    {
+        policy.AuthenticationSchemes.Add("UsuarioToken");
+        policy.RequireAuthenticatedUser();
+    });
+});
 
 
 

@@ -20,11 +20,9 @@ public partial class TigreHacksContext : DbContext
 
     public virtual DbSet<Carro> Carros { get; set; }
 
-    public virtual DbSet<Usuario> Usuarios { get; set; }
+    public virtual DbSet<HeatmapDatum> HeatmapData { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=tigre-hacks.ca9jhoz8t6v5.us-east-2.rds.amazonaws.com,1433;Database=tigre_hacks;User Id=admin1;Password=1234567890;TrustServerCertificate=True;");
+    public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -119,6 +117,13 @@ public partial class TigreHacksContext : DbContext
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Carros)
                 .HasForeignKey(d => d.IdUsuario)
                 .HasConstraintName("FK__carro__id_usuari__398D8EEE");
+        });
+
+        modelBuilder.Entity<HeatmapDatum>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__HeatmapD__3213E83FE6A78F49");
+
+            entity.Property(e => e.Id).HasColumnName("id");
         });
 
         modelBuilder.Entity<Usuario>(entity =>

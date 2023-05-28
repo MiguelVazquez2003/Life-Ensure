@@ -23,6 +23,21 @@ namespace LifeEnsure.Controllers
         var heatmapData = _csvService.ReadHeatmapDataFromCSV(filePath);
         return Ok(heatmapData);
     }
+
+    [HttpPost("upload")]
+        public IActionResult UploadHeatmapData()
+        {
+            var filePath = "Data\\Mapa.csv"; // Especifica la ruta del archivo CSV
+
+            var heatmapData = _csvService.ReadHeatmapDataFromCSV(filePath);
+            _csvService.SaveHeatmapDataToDatabase(heatmapData);
+
+            return Ok();
+        }
+
+  
+    
+
 }
 }
 

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5iWkCu1hw3A+6R8lnelh2PQN+OmncoPUYtZMdcquJsxc/LDcC8SL6Lrv9akctR5sc74xRU1y8AjR7RlMIXlIog==",
+  "dgSpecHash": "s+xeofNeZZ/3qgvhxj6IRuWIDePOOJdRgHy0uTZMMSoD5j6BrckJ1WiA85LPsMPMBhlPW/IwGGAqat/NRKN+6Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\angel\\OneDrive\\Escritorio\\Intento\\LifeEnsure\\LifeEnsure.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\angel\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\angel\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512",
     "C:\\Users\\angel\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\angel\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.5\\microsoft.aspnetcore.authentication.jwtbearer.7.0.5.nupkg.sha512",
     "C:\\Users\\angel\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.5\\microsoft.aspnetcore.openapi.7.0.5.nupkg.sha512",
     "C:\\Users\\angel\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\angel\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

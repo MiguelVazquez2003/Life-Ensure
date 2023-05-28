@@ -1,18 +1,25 @@
 
 using CsvHelper;
+using LifeEnsure.Data;
+using LifeEnsure.Data.Models;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 namespace LifeEnsure.Services;
 public class CsvService
 {
-    
-public List<HeatmapData> ReadHeatmapDataFromCSV(string filePath)
+     private readonly TigreHacksContext _context;
+
+        public CsvService(TigreHacksContext context)
+        {
+            _context = context;
+        }
+ public List<HeatmapDatum> ReadHeatmapDataFromCSV(string filePath)
         {
             using (var reader = new StreamReader(filePath))
             using (var csv = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
             {
-                var heatmapData = new List<HeatmapData>();
+                var heatmapData = new List<HeatmapDatum>();
                 csv.Read();
                 csv.ReadHeader();
 
@@ -31,12 +38,27 @@ public List<HeatmapData> ReadHeatmapDataFromCSV(string filePath)
                     var lng = double.Parse(latLng[1]);
                     var value = csv.GetField<int>(1);
 
-                    var data = new HeatmapData { Lat = lat, Lng = lng, Value = value };
+                    var data = new HeatmapDatum { Lat = lat, Lng = lng, Value = value };
                     heatmapData.Add(data);
                 }
 
                 return heatmapData;
             }
-}
+        }
 
-}
+        public void SaveHeatmapDataToDatabase(List<HeatmapDatum> heatmapData)
+        {
+            _context.HeatmapData.AddRange(heatmapData);
+            _context.SaveChanges();
+        }
+    }
+
+
+    
+
+
+
+
+
+
+
