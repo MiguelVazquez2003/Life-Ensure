@@ -23,7 +23,7 @@ public async Task<IEnumerable<CarroDtoOut>> GetAll()
             Modelo = a.Modelo,
             ValorDeducible = a.ValorDeducible,
             IdUsuario = a.IdUsuario,
-            UsuarioNombre = a.IdUsuarioNavigation != null ? a.IdUsuarioNavigation.Nombre : null
+           
 
         })
         .ToListAsync();

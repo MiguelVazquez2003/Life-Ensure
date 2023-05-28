@@ -11,7 +11,6 @@ public class CarroDtoOut
 
     public int? IdUsuario { get; set; }
 
-    public string? UsuarioNombre {get;set;}
 
 
 }
