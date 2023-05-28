@@ -27,29 +27,7 @@ builder.Services.AddScoped<AccidenteService>();
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<CsvService>();
 
-// Configuraci�n para token de usuario
-builder.Services.AddAuthentication("UsuarioToken")
-    .AddJwtBearer("UsuarioToken", options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:ClientKey"])),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-    });
 
-
-// Pol�tica de autorizaci�n para usuarios
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("UsuarioPolicy", policy =>
-    {
-        policy.AuthenticationSchemes.Add("UsuarioToken");
-        policy.RequireAuthenticatedUser();
-    });
-});
 
 
 
@@ -63,6 +41,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(builder => {
+    builder.WithOrigins("http://localhost:3000")
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+});
 
 app.UseAuthorization();
 

@@ -22,8 +22,8 @@ namespace LifeEnsure.Data.DTOs
         public int? Muertos { get; set; }
         public string? SituacionClimatica { get; set; }
         public string? SituacionPavimento { get; set; }
-        public Usuario Usuario { get; set; }
-        public CarroDtoOut Vehiculo { get; set; }
+        public Usuario? Usuario { get; set; }
+        public CarroDtoOut? Vehiculo { get; set; }
     }
 
     public class AccidenteDtoIn
