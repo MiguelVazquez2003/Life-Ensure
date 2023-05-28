@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace LifeEnsure.Data.Models;
 
@@ -18,8 +19,8 @@ public partial class Usuario
     public string? Genero { get; set; }
 
     public int? Edad { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<Accidente> Accidentes { get; set; } = new List<Accidente>();
-
+    [JsonIgnore]
     public virtual ICollection<Carro> Carros { get; set; } = new List<Carro>();
 }

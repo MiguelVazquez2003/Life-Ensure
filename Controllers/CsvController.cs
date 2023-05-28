@@ -23,6 +23,13 @@ namespace LifeEnsure.Controllers
         var heatmapData = _csvService.ReadHeatmapDataFromCSV(filePath);
         return Ok(heatmapData);
     }
+    [HttpGet("getall/tabla")]
+public IActionResult GetHeatmapDataTabla()
+{
+    var heatmapData = _csvService.GetHeatmapDataFromDatabase(); // Obtener los datos del mapa de calor desde la base de datos
+    return Ok(heatmapData);
+}
+
 
     [HttpPost("upload")]
         public IActionResult UploadHeatmapData()

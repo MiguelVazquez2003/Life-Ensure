@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace LifeEnsure.Data.Models;
 
@@ -42,8 +43,8 @@ public partial class Accidente
     public string? SituacionClimatica { get; set; }
 
     public string? SituacionPavimento { get; set; }
-
+    [JsonIgnore]
     public virtual Usuario? IdUsuarioNavigation { get; set; }
-
+    [JsonIgnore]
     public virtual Carro? IdVehiculoNavigation { get; set; }
 }

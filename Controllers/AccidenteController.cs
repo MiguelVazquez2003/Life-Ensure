@@ -11,10 +11,12 @@ namespace LifeEnsure.Controllers
     public class AccidenteController : ControllerBase
     {
         private readonly AccidenteService _accidenteService;
+        private readonly CsvService _csvService;
 
-        public AccidenteController(AccidenteService accidenteService)
+        public AccidenteController(AccidenteService accidenteService, CsvService csvService)
         {
             _accidenteService = accidenteService;
+            _csvService=csvService;
         }
 
         [HttpGet("getall")]
@@ -34,12 +36,40 @@ namespace LifeEnsure.Controllers
             return Ok(accidente);
         }
 
-        [HttpPost("create")]
-        public async Task<ActionResult<AccidenteDtoOut>> Create(AccidenteDtoIn newAccidenteDTO)
+   [HttpPost("create")]
+public async Task<IActionResult> Create(AccidenteDtoIn accidente)
+{
+    // Insertar el nuevo registro en la tabla "Accidente"
+    var newAccidente = await _accidenteService.Create(accidente);
+
+    // Obtener la latitud y longitud del nuevo registro
+    double latitud = (double)accidente.Latitud;
+    double longitud = (double)accidente.Longitud;
+
+    // Verificar si existe un registro en la tabla "HeatmapDatum" con la misma latitud y longitud
+    var existingHeatmapDatum = await _csvService.GetByLatitudLongitud(latitud, longitud);
+
+    if (existingHeatmapDatum != null)
+    {
+        // Actualizar el campo "Recount" incrementando su valor en 1
+        existingHeatmapDatum.Value++;
+        await _csvService.Update(existingHeatmapDatum);
+    }
+    else
+    {
+        // Crear un nuevo registro en la tabla "HeatmapDatum" con la latitud, longitud y valor inicial de "Recount" como 1
+        var newHeatmapDatum = new HeatmapDatum
         {
-            var accidente = await _accidenteService.Create(newAccidenteDTO);
-            return CreatedAtAction(nameof(GetById), new { id = accidente.Id }, accidente);
-        }
+            Lat = latitud,
+            Lng = longitud,
+            Value = 1
+        };
+        await _csvService.Create(newHeatmapDatum);
+    }
+
+    return CreatedAtAction(nameof(GetById), new { id = newAccidente.Id }, newAccidente);
+}
+
 
         [HttpPut("modificar/{id}")]
         public async Task<IActionResult> Update(int id, AccidenteDtoIn accidenteDTO)

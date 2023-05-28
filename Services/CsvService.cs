@@ -2,6 +2,7 @@
 using CsvHelper;
 using LifeEnsure.Data;
 using LifeEnsure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -51,6 +52,29 @@ public class CsvService
             _context.HeatmapData.AddRange(heatmapData);
             _context.SaveChanges();
         }
+
+        public async Task<HeatmapDatum> GetByLatitudLongitud(double latitud, double longitud)
+{
+    return await _context.HeatmapData.FirstOrDefaultAsync(d => d.Lat == latitud && d.Lng == longitud);
+}
+
+public async Task Update(HeatmapDatum heatmapDatum)
+{
+    _context.HeatmapData.Update(heatmapDatum);
+    await _context.SaveChangesAsync();
+}
+
+public async Task Create(HeatmapDatum heatmapDatum)
+{
+    _context.HeatmapData.Add(heatmapDatum);
+    await _context.SaveChangesAsync();
+}
+public List<HeatmapDatum> GetHeatmapDataFromDatabase()
+{
+    var heatmapData = _context.HeatmapData.ToList(); // Reemplaza "_dbContext" con tu contexto de base de datos
+
+    return heatmapData;
+}
     }
 
 
